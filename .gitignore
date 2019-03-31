@@ -1,4 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 0.HWDB-CASIA/data
-__pycache__/*
+*.pyc
