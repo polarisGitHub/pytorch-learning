@@ -32,20 +32,20 @@ def decode(gnt_file, root_dir, width=72, height=72, train_dir=False):
                 character_set.add(character)
                 labels.append(counter)
                 counter += 1
-            # img_dir = "%s/%s" % (root_dir, character)
-            # if not os.path.exists(img_dir):
-            #     os.makedirs(img_dir)
-            # image = Image.fromarray(data)
-            #
-            # ration = min(width / image.size[0], height / image.size[1])
-            # resize_width, resize_height = int(image.size[0] * ration), int(image.size[1] * ration)
-            # image = image.convert('L').resize((resize_width, resize_height), Image.ANTIALIAS)
-            # resize_image = Image.new('L', (width, height), 255)
-            # resize_image.paste(image, (abs(image.size[0] - width) // 2, abs(image.size[1] - height) // 2))
-            # resize_image.save("%s/%s/%s.%s" % (root_dir, character, uuid.uuid4(), 'png'))
+            img_dir = "%s/%s" % (root_dir, character)
+            if not os.path.exists(img_dir):
+                os.makedirs(img_dir)
+            image = Image.fromarray(data)
+
+            ration = min(width / image.size[0], height / image.size[1])
+            resize_width, resize_height = int(image.size[0] * ration), int(image.size[1] * ration)
+            image = image.convert('L').resize((resize_width, resize_height), Image.ANTIALIAS)
+            resize_image = Image.new('L', (width, height), 255)
+            resize_image.save("%s/%s/%s.%s" % (root_dir, character, uuid.uuid4(), 'png'))
+            resize_image.paste(image, (abs(image.size[0] - width) // 2, abs(image.size[1] - height) // 2))
     df = pd.DataFrame({'character': characters, 'label': labels})
     return df
 
 
-# decode("./data/1.0test-gb1.gnt", "./data/test")
+decode("./data/1.0test-gb1.gnt", "./data/test")
 decode("./data/1.0train-gb1.gnt", "./data/train", train_dir=True).to_csv("label.csv", encoding='utf-8', index=False)
