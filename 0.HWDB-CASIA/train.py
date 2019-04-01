@@ -2,6 +2,8 @@
 
 from optparse import OptionParser
 
+import codecs
+import json
 import torch
 import torchvision
 import torch.nn as nn
@@ -20,13 +22,17 @@ dataset = torchvision.datasets.ImageFolder(options.train_dir,
                                                transforms.ToTensor(),
                                                transforms.Normalize(mean=(0.5,), std=(0.5,)),
                                            ]))
-train_loader = torch.utils.data.DataLoader(dataset, batch_size=4, shuffle=True, num_workers=cpu_count())
+train_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True, num_workers=cpu_count())
 
 net = TrainNet()
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
 
-for epoch in range(2):  # loop over the dataset multiple times
+with codecs.open('model/index.json', "w", encoding='utf-8') as f:
+    label = dataset.class_to_idx
+    json.dump(dict(zip(label.values(), label.keys())), f, ensure_ascii=False)
+
+for epoch in range(20):  # loop over the dataset multiple times
 
     running_loss = 0.0
     for i, data in enumerate(train_loader, 0):
@@ -44,9 +50,9 @@ for epoch in range(2):  # loop over the dataset multiple times
 
         # print statistics
         running_loss += loss.item()
-        if i % 2 == 1:  # print every 2 mini-batches
-            print('[%d, %5d] loss: %.3f' %
-                  (epoch + 1, i + 1, running_loss / 2))
+        if i % 10 == 1:
+            print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 10))
             running_loss = 0.0
 
+torch.save(net.state_dict(), 'model/lenet')
 print('Finished Training')
