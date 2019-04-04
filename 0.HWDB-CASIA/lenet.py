@@ -14,7 +14,7 @@ class Net(nn.Module):
         self.dropout = nn.Dropout(0.5)
         self.fc1 = nn.Linear(16 * 15 * 15, 120)
         self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 22)
+        self.fc3 = nn.Linear(84, 3740)
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
