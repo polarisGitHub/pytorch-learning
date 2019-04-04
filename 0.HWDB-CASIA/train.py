@@ -17,6 +17,7 @@ print("use gpu", gpu)
 
 parser = OptionParser()
 parser.add_option("-t", "--train_dir", dest="train_dir", help="train file dir", type="string")
+parser.add_option("-m", "--model", dest="model", help="model", type="string")
 parser.add_option("-e", "--epoches", dest="epoches", help="epoches", type="int")
 parser.add_option("-b", "--batch_size", dest="batch_size", help="batch_size", type="int")
 (options, args) = parser.parse_args()
@@ -67,6 +68,7 @@ for epoch in range(options.epoches):
             ))
             running_loss = 0.0
             correct = 0
+        if i % 1000 == 0:
+            torch.save(net.state_dict(), options.model)
 
-torch.save(net.state_dict(), 'model/lenet')
 print('Finished Training')
