@@ -21,18 +21,25 @@ dataset = torchvision.datasets.ImageFolder(options.test_dir,
                                            ]))
 test_loader = torch.utils.data.DataLoader(dataset, batch_size=128, shuffle=True, num_workers=cpu_count())
 
+gpu = torch.cuda.is_available()
+print("use gpu", gpu)
+
 net = TestNet()
 net.load_state_dict(torch.load(options.model))
 net.eval()
 
+if gpu:
+    net = net.cuda()
 correct = 0
 total = 0
-for i, data in enumerate(test_loader, 0):
-    inputs, labels = data
+for i, (inputs, labels) in enumerate(test_loader, 0):
+    if gpu:
+        inputs = inputs.cuda()
+        labels = labels.cuda()
     outputs = net(inputs)
     _, predicted = torch.max(outputs.data, 1)
 
-    total += labels.size(0)
+    total += 128
     correct += (predicted == labels).sum().item()
 
 print('Accuracy of the network on the  test images: %d %%' % (100 * correct / total))
