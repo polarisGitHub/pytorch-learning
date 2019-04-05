@@ -24,8 +24,10 @@ parser.add_option("-n", "--net", dest="net", help="net", type="string")
 (options, args) = parser.parse_args()
 
 if options.net == 'lenet':
+    print('use lenet')
     from lenet import Net as TrainNet
 elif options.net == 'resnet18':
+    print('use resnet18')
     from resnet18 import Net as TrainNet
 
 transform = transforms.Compose(
