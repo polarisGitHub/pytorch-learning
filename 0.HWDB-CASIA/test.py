@@ -9,6 +9,8 @@ from lenet import Net as TestNet
 
 parser = OptionParser()
 parser.add_option("-t", "--test_dir", dest="test_dir", help="test file dir", type="string")
+parser.add_option("-m", "--model", dest="model", help="model", type="string")
+
 (options, args) = parser.parse_args()
 
 dataset = torchvision.datasets.ImageFolder(options.test_dir,
@@ -20,9 +22,8 @@ dataset = torchvision.datasets.ImageFolder(options.test_dir,
 test_loader = torch.utils.data.DataLoader(dataset, batch_size=8, shuffle=True, num_workers=cpu_count())
 
 net = TestNet()
-net.load_state_dict(torch.load('model/lenet'))
+net.load_state_dict(torch.load(options.model))
 net.eval()
-
 
 correct = 0
 total = 0
