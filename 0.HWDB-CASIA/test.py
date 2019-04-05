@@ -19,7 +19,7 @@ dataset = torchvision.datasets.ImageFolder(options.test_dir,
                                                transforms.ToTensor(),
                                                transforms.Normalize(mean=(0.5,), std=(0.5,)),
                                            ]))
-test_loader = torch.utils.data.DataLoader(dataset, batch_size=8, shuffle=True, num_workers=cpu_count())
+test_loader = torch.utils.data.DataLoader(dataset, batch_size=128, shuffle=True, num_workers=cpu_count())
 
 net = TestNet()
 net.load_state_dict(torch.load(options.model))
