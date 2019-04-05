@@ -7,13 +7,15 @@ import codecs
 import torch
 import torchvision
 from torchvision import transforms
-from lenet import Net as TestNet
+import netfactory
 
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 parser = OptionParser()
 parser.add_option("-p", "--predict_dir", dest="predict_dir", help="test file dir", type="string")
+parser.add_option("-m", "--model", dest="model", help="model", type="string")
+parser.add_option("-n", "--net", dest="net", help="net", type="string")
+
 (options, args) = parser.parse_args()
 
 dataset = torchvision.datasets.ImageFolder(options.predict_dir,
@@ -27,8 +29,8 @@ predicted_loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=Tr
 with codecs.open("model/label.json", "r", encoding='utf-8') as f:
     index = json.load(f)
 
-net = TestNet()
-net.load_state_dict(torch.load('model/lenet', map_location='cpu'))
+net = netfactory.getNet(options.net)
+net.load_state_dict(torch.load(options.model, map_location='cpu'))
 net.eval()
 
 for i, data in enumerate(predicted_loader, 0):

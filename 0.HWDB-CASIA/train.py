@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import transforms
 from multiprocessing import cpu_count
+import netfactory
 
 gpu = torch.cuda.is_available()
 print("use gpu", gpu)
@@ -23,13 +24,6 @@ parser.add_option("-n", "--net", dest="net", help="net", type="string")
 
 (options, args) = parser.parse_args()
 
-if options.net == 'lenet':
-    print('use lenet')
-    from lenet import Net as TrainNet
-elif options.net == 'resnet18':
-    print('use resnet18')
-    from resnet18 import Net as TrainNet
-
 transform = transforms.Compose(
     [transforms.Grayscale(), transforms.ToTensor(), transforms.Normalize(mean=(0.5,), std=(0.5,))])
 dataset = torchvision.datasets.ImageFolder(options.train_dir, transform=transform)
@@ -41,7 +35,7 @@ with codecs.open('model/label.json', "w", encoding='utf-8') as f:
 train_loader = torch.utils.data.DataLoader(dataset, batch_size=options.batch_size, shuffle=True,
                                            num_workers=cpu_count())
 
-net = TrainNet()
+net = net = netfactory.getNet(options.net)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters())
 
