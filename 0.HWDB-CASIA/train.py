@@ -30,7 +30,7 @@ with codecs.open('model/label.json', "w", encoding='utf-8') as f:
     label = dataset.class_to_idx
     json.dump(dict(zip(label.values(), label.keys())), f, ensure_ascii=False)
 
-train_loader = torch.utils.data.DataLoader(dataset, batch_size=100, shuffle=True,
+train_loader = torch.utils.data.DataLoader(dataset, batch_size=options.batch_size, shuffle=True,
                                            num_workers=cpu_count())
 
 net = TrainNet()
