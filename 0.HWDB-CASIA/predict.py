@@ -24,11 +24,11 @@ dataset = torchvision.datasets.ImageFolder(options.predict_dir,
                                            ]))
 predicted_loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True, num_workers=1)
 
-with codecs.open("model/index.json", "r", encoding='utf-8') as f:
+with codecs.open("model/label.json", "r", encoding='utf-8') as f:
     index = json.load(f)
 
 net = TestNet()
-net.load_state_dict(torch.load('model/lenet'))
+net.load_state_dict(torch.load('model/lenet', map_location='cpu'))
 net.eval()
 
 for i, data in enumerate(predicted_loader, 0):
@@ -37,7 +37,7 @@ for i, data in enumerate(predicted_loader, 0):
     _, predicted = torch.max(outputs.data, 1)
     right = (predicted == labels).sum().item()
 
-    print(index[str(predicted.data.numpy()[0])], right)
+    print("label", index[str(labels.data.numpy()[0])], "predict", index[str(predicted.data.numpy()[0])], right)
     img = Image.fromarray(inputs.data.numpy()[0, 0, :, :] * 255)
     img.show()
     time.sleep(5)
