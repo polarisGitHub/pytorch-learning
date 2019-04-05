@@ -79,4 +79,5 @@ for epoch in range(options.epoches):
         if i % 1000 == 0:
             torch.save(net.state_dict(), options.model)
 
+torch.save(net.state_dict(), options.model)
 print('Finished Training')

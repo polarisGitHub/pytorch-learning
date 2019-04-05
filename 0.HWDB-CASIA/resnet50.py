@@ -2,12 +2,12 @@
 from torch import nn
 import torchvision.models as models
 from torchsummary import summary
-from torchvision.models.resnet import BasicBlock
+from torchvision.models.resnet import Bottleneck
 
 
 class Net(models.ResNet):
     def __init__(self):
-        super(Net, self).__init__(BasicBlock, [2, 2, 2, 2], num_classes=3740)
+        super(Net, self).__init__(Bottleneck, [3, 4, 6, 3], num_classes=3740)
         self.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
 
 
