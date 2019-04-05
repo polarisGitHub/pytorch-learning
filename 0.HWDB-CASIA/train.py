@@ -10,7 +10,6 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import transforms
 from multiprocessing import cpu_count
-from lenet import Net as TrainNet
 
 gpu = torch.cuda.is_available()
 print("use gpu", gpu)
@@ -20,7 +19,14 @@ parser.add_option("-t", "--train_dir", dest="train_dir", help="train file dir", 
 parser.add_option("-m", "--model", dest="model", help="model", type="string")
 parser.add_option("-e", "--epoches", dest="epoches", help="epoches", type="int")
 parser.add_option("-b", "--batch_size", dest="batch_size", help="batch_size", type="int")
+parser.add_option("-n", "--net", dest="net", help="net", type="string")
+
 (options, args) = parser.parse_args()
+
+if options.net == 'lenet':
+    from lenet import Net as TrainNet
+elif options.net == 'resnet18':
+    from resnet18 import Net as TrainNet
 
 transform = transforms.Compose(
     [transforms.Grayscale(), transforms.ToTensor(), transforms.Normalize(mean=(0.5,), std=(0.5,))])
