@@ -10,6 +10,7 @@ from lenet import Net as TestNet
 parser = OptionParser()
 parser.add_option("-t", "--test_dir", dest="test_dir", help="test file dir", type="string")
 parser.add_option("-m", "--model", dest="model", help="model", type="string")
+parser.add_option("-n", "--net", dest="net", help="net", type="string")
 
 (options, args) = parser.parse_args()
 
@@ -23,6 +24,13 @@ test_loader = torch.utils.data.DataLoader(dataset, batch_size=128, shuffle=True,
 
 gpu = torch.cuda.is_available()
 print("use gpu", gpu)
+
+if options.net == 'lenet':
+    print('use lenet')
+    from lenet import Net as TestNet
+elif options.net == 'resnet18':
+    print('use resnet18')
+    from resnet18 import Net as TestNet
 
 net = TestNet()
 net.load_state_dict(torch.load(options.model))
