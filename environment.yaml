@@ -1,0 +1,54 @@
+name: pytorch
+channels:
+  - pytorch
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - defaults
+dependencies:
+  - blas=1.0=mkl
+  - certifi=2016.2.28=py36_0
+  - cffi=1.10.0=py36_0
+  - cycler=0.10.0=py36_0
+  - freetype=2.8=h12048fb_1
+  - intel-openmp=2019.5=281
+  - jbig=2.1=0
+  - jpeg=9b=0
+  - kiwisolver=1.1.0=py36h0a44026_0
+  - libcxx=4.0.1=hcfea43d_1
+  - libcxxabi=4.0.1=hcfea43d_1
+  - libgfortran=3.0.1=h93005f0_2
+  - libpng=1.6.37=ha441bb4_0
+  - libtiff=4.0.9=hcb84e12_1
+  - matplotlib=2.2.2=py36ha7267d0_0
+  - mkl=2019.4=233
+  - mkl-service=2.3.0=py36hfbe908c_0
+  - mkl_fft=1.0.14=py36h5e564d8_0
+  - mkl_random=1.0.2=py36h27c97d8_0
+  - ninja=1.7.2=0
+  - numpy=1.16.5=py36hacdab7b_0
+  - numpy-base=1.16.5=py36h6575580_0
+  - olefile=0.44=py36_0
+  - openssl=1.0.2l=0
+  - pillow=4.2.1=py36h0263179_0
+  - pip=9.0.1=py36_1
+  - pycparser=2.18=py36_0
+  - pyparsing=2.2.0=py36_0
+  - python=3.6.2=0
+  - python-dateutil=2.6.1=py36_0
+  - pytorch=1.2.0=py3.6_0
+  - pytz=2017.2=py36_0
+  - readline=6.2=2
+  - scipy=1.3.1=py36h1410ff5_0
+  - setuptools=36.4.0=py36_1
+  - six=1.10.0=py36_0
+  - sqlite=3.13.0=0
+  - tk=8.5.18=0
+  - torchvision=0.4.0=py36_cpu
+  - tornado=4.5.2=py36_0
+  - wheel=0.29.0=py36_0
+  - xz=5.2.3=0
+  - zlib=1.2.11=0
+  - pip:
+    - opencv-python==4.1.1.26
+    - torchsummary==1.5.1
+
