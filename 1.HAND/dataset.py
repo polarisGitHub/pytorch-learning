@@ -4,7 +4,6 @@ import torch
 import cv2
 import numpy as np
 import os
-from PIL import Image
 from scipy.io import loadmat
 
 
@@ -65,12 +64,11 @@ class HandDataset(object):
 
         }
         if self.transforms is not None:
-            image, target = self.transforms(image, target)
-        return Image.fromarray(image), target
+            image = self.transforms(image)
+        return image, target
 
     def __len__(self):
         return len(self.dataset)
-
 
 # dataset = HandDataset("/Volumes/data/hand_dectection/egohands_data/_LABELLED_SAMPLES/", None)
 # dataset[300]
