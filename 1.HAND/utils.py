@@ -279,7 +279,6 @@ def get_transform(train):
     t = []
     if train:
         t.append(torchvision.transforms.transforms.RandomHorizontalFlip(0.5))
-    t.append(torchvision.transforms.transforms.Resize((360, 640)))
     t.append(torchvision.transforms.transforms.ToTensor())
 
     return torchvision.transforms.transforms.Compose(t)
