@@ -7,13 +7,7 @@ from model import MaskRcnn as MaskRcnn
 import utils
 
 
-def get_transform(train):
-    t = []
-    # if train:
-    #     t.append(torchvision.transforms.transforms.RandomHorizontalFlip(0.5))
-    t.append(torchvision.transforms.transforms.ToTensor())
 
-    return torchvision.transforms.transforms.Compose(t)
 
 
 def main(args):
@@ -21,7 +15,7 @@ def main(args):
 
     print("load dataset")
     num_classes = 2
-    data = HandDataset(args.data_path, get_transform(train=True))
+    data = HandDataset(args.data_path, utils.get_transform(train=True))
 
     indices = torch.randperm(len(data)).tolist()
     test_cnt = int(len(data) / 10)

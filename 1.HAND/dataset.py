@@ -4,6 +4,8 @@ import torch
 import cv2
 import numpy as np
 import os
+
+from PIL import Image
 from scipy.io import loadmat
 
 
@@ -53,11 +55,12 @@ class HandDataset(object):
         #     image = cv2.rectangle(image, (box[0], box[1]), (box[2], box[3]), (255, 255, 255), 2)
         # cv2.imshow("", image)
         # cv2.waitKey(0)
+        image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         target = {
             "boxes": boxes,
             "labels": torch.ones((num_objs,), dtype=torch.int64),
-            "masks": torch.as_tensor(masks, dtype=torch.uint8),
+            "masks": torch.from_numpy(masks),
             "area": (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0]),
             "image_id": torch.tensor([idx]),
             "iscrowd": torch.zeros((num_objs,), dtype=torch.int64)
